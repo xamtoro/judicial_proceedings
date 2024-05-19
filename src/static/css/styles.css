@@ -1,0 +1,26 @@
+:root {
+    --font-family: "Jost", sans-serif;
+}
+
+body {
+    font-family: var(--font-family) !important;
+}
+
+.bg-gray-50{
+    background: #f6f6f6;
+}
+
+.option-small {
+    font-size: 0.875rem;
+}
+
+.small-text-select {
+    font-size: 0.875rem !important;
+}
+
+.alert-dismissible {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1050;
+}

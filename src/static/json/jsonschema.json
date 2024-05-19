@@ -1,0 +1,20 @@
+{
+    "consult_judicial_proceedings" : {
+        "title": "ConsultJudicialProceedings",
+        "description": "Validations for consult judicial proceedings",
+        "type": "object",
+        "properties" : {
+            "identifier" : {
+                "type" : "string",
+                "minLength" : 6,
+                "maxLength" : 20
+            },
+            "person_type" : {
+                "type" : "string",
+                "minLength" : 1,
+                "maxLength" : 15
+            }
+        },
+        "required" : ["identifier", "person_type"]
+    }
+}

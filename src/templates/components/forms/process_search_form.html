@@ -1,0 +1,39 @@
+<div class="card p-4 shadow-sm">
+    <div class="card-header bg-white border-0">
+        <h3 class="card-title fw-bold text-center">CONSULTA PROCESOS JUDICIALES</h3>
+    </div>
+    <div class="card-body">
+        <form action="/result-search-judicial-proceedings" method="post" enctype="application/json">
+            <div class="row mt-2">
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="rounded-pill form-control shadow-sm border-dark-subtle px-4" id="identifier"
+                            name="identifier" placeholder="ID" autocomplete="off">
+                        <label for="identifier" class="text-secondary px-4">Ingrese la identificación</label>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-floating mb-3">
+                        <select class="form-select small-text-select shadow-sm border border-dark-subtle rounded-pill px-4"
+                            id="personType" name="person_type" aria-label="Person Type">
+                            <option class="option-small text-secondary" value="" selected>Seleccione una opción</option>
+                            <option class="option-small" value="1">Actor / Ofendido</option>
+                            <option class="option-small" value="2">Demandado / Procesado</option>
+                        </select>
+                        <label for="personType" class="px-4">Tipo de persona</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6 mb-3">
+                    <button type="button" class="rounded-pill btn btn-outline-danger fw-bold w-100 p-3 shadow-sm">Limpiar campos <i
+                            class="bi bi-x-lg px-2"></i></button>
+                </div>
+                <div class="col-md-6">
+                    <button type="submit" class="rounded-pill btn btn-outline-success fw-bold w-100 p-3 shadow-sm">Realizar búsqueda
+                        <i class="bi bi-search px-2"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
