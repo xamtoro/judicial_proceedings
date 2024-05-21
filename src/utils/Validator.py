@@ -1,4 +1,5 @@
 from jsonschema import validate, ValidationError
+from os import getenv
 import json
 
 class Validator:
@@ -6,14 +7,14 @@ class Validator:
     @classmethod
     def validate_data(cls, data : dict, option : str):
         """
-        Método encargado de validar los datos de entrada.
+            Method responsible for validating input data.
 
-        Parámetros:
-            - data : diccionario
-            - option : string
+            Parameters:
+                - data : dictionary
+                - option : string
 
-        Retorno:
-            - Eleva una excepción de tipo ValidationError
+            Returns:
+                - Raises a ValidationError exception
         """
 
         messages = {
@@ -29,7 +30,7 @@ class Validator:
             "maxItems" : "El campo {} solo tiene permitido 3 items."
         }
 
-        with open(f"src/static/json/jsonschema.json") as file:
+        with open(getenv("JSONSCHEMA_PATH")) as file:
             schema = json.loads(file.read())
             file.close()
 
@@ -75,41 +76,49 @@ class Validator:
             elif e.validator == "maxItems":
                 error = messages["maxItems"].format(field)
 
-            print(error)
-            raise Exception(error)
+            raise ValidationError(error)
 
     @classmethod
     def transform_data(cls, data) -> dict:
         """
-        Method responsible for validating if the data comes from a form or JSON.
+            Method responsible for validating if the data comes from a form or JSON.
 
-        Parameters:
-            - data: form or JSON
+            Parameters:
+                - data: form or JSON
 
-        Return:
-            - Dictionary containing the data
+            Return:
+                - Dictionary containing the data
 
-        Returns:
-            - dict: Data in dictionary form
+            Returns:
+                - dict: Data in dictionary form
         """
 
         try:
             # Check if the data comes from a JSON request
             if data.headers.get('Content-Type') == 'application/json':
-                # Data comes as JSON
                 payload = data.get_json()
-            # Check if the data comes from a form request
+
             elif data.headers.get('Content-Type') in ['application/x-www-form-urlencoded', 'multipart/form-data']:
-                # Data comes as form data
                 data = data.form
-                # Convert form data to a dictionary using map and filter
                 payload = dict(map(lambda key: (key, data[key]), filter(lambda key: True, data.keys())))
+
             else:
-                # Raise an error if the Content-Type is not supported
                 raise ValidationError("Content-Type not supported")
 
             return payload
 
         except ValidationError as error:
-            # Raise an exception if validation error occurs
             raise Exception(error)
+
+    @classmethod
+    def validate_type_error(cls, error) -> str:
+
+        try:
+            if "ValidationError" in f"{type(error)}":
+                return "¡Por favor ingresa los datos correctamente!"
+            else:
+                print(error)
+                return "¡Ups! ha ocurrido un error inesperado"
+
+        except Exception as error:
+            raise error

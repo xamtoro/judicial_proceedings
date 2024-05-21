@@ -1,0 +1,96 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    {% if 'message' in records %}
+        <div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
+            <div class="card text-center p-4" style="width: 24rem;">
+                <div class="card-body">
+                    <h5 class="card-title text-danger fw-bold">No se encontraron datos</h5>
+                    <p class="card-text">{{ records.message }}</p>
+                    <a href="/consult-judicial-proceedings" class="btn btn-primary btn-small">Volver a consulta judicial</a>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <h6 class="fw-bold text-success">Recuerda que estos datos han sido guardados automaticamente en formato json tu carpeta de descargas...</h6>
+        <h1>JSON Data Table</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Process Number</th>
+                    <th>Action Infraction</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in records %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.date }}</td>
+                    <td>{{ item.process_number }}</td>
+                    <td>{{ item.action_infraction }}</td>
+                    <td>
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#details-{{ item.id }}" aria-expanded="false"
+                            aria-controls="details-{{ item.id }}">
+                            Show Details
+                        </button>
+                        <div class="collapse mt-2" id="details-{{ item.id }}">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Entry Date</th>
+                                        <th>Actors</th>
+                                        <th>Defendants</th>
+                                        <th>Judicial Proceedings</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for detail in item.details %}
+                                    <tr>
+                                        <td>{{ detail.entry_date }}</td>
+                                        <td>{{ detail.actors }}</td>
+                                        <td>{{ detail.defendants }}</td>
+                                        <td>
+                                            <button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#judicial-{{ item.id }}-{{ detail.id }}"
+                                                aria-expanded="false"
+                                                aria-controls="judicial-{{ item.id }}-{{ detail.id }}">
+                                                Show Judicial Proceedings
+                                            </button>
+                                            <div class="collapse mt-2" id="judicial-{{ item.id }}-{{ detail.id }}">
+                                                <table class="table table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Date</th>
+                                                            <th>Detail</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for jp in detail.judicial_proceedings %}
+                                                        <tr>
+                                                            <td>{{ jp.date }}</td>
+                                                            <td>{{ jp.detail }}</td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+
+{% endblock %}
