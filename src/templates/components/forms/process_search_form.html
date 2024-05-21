@@ -3,7 +3,7 @@
         <h3 class="card-title fw-bold text-center">CONSULTA PROCESOS JUDICIALES</h3>
     </div>
     <div class="card-body">
-        <form action="/result-search-judicial-proceedings" method="post" enctype="application/json">
+        <form id="judicialForm" action="/court-records-found" method="post" enctype="application/json">
             <div class="row mt-2">
                 <div class="col-sm-12 col-md-6">
                     <div class="form-floating mb-3">
@@ -35,5 +35,14 @@
                 </div>
             </div>
         </form>
+    </div>
+</div>
+
+<div id="loadingOverlay">
+    <div id="loadingMessage">
+        <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Procesando la petición, por favor espere...</span>
+        </div>
+        <p>Procesando la petición, por favor espere...</p>
     </div>
 </div>
