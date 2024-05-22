@@ -76,7 +76,7 @@ def result_search_judicial_proceedings():
 
         controller = JSPC()
         records = controller.fill_form_and_submmit(validated_data)
-        print(records)
+
         return jsonify({"response": records})
 
     except Exception as e:

@@ -248,7 +248,6 @@ class JudicialProceedingsScrapingService:
 
                 for record in records:
                     panels = record.find_elements(By.CLASS_NAME, 'mat-expansion-panel')
-                    print(len(panels))
 
                     for panel in panels:
                         date = panel.find_element(By.CSS_SELECTOR, '.cabecera-tabla span').text

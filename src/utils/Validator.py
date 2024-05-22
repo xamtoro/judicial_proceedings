@@ -125,7 +125,6 @@ class Validator:
             if "ValidationError" in f"{type(error)}":
                 return "¡Por favor ingresa los datos correctamente!"
             else:
-                print(error)
                 return "¡Ups! ha ocurrido un error inesperado"
 
         except Exception as error:
