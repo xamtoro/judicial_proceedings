@@ -18,18 +18,34 @@ PAGES_PATH = getenv("PAGES_PATH")
 def index():
     return render_template('index.html')
 
+"""
+Note: this is a simple login api, it will simply serve to generate the
+access token to authenticate the main api :D.
+"""
+#Api for login and return access token
 @app.post("/login")
 def login():
     try:
         validated_data = Validator.validate_data(request, "login")
 
-        access_token = create_access_token(identity = validated_data)
-        refresh_token = create_refresh_token(identity = validated_data)
+        #Test credentials
+        AUTHORIZED_MAIL = getenv("EMAIL")
+        AUTHORIZED_PASSWORD = getenv("PASSWORD")
 
-        return jsonify(response = {"access_token" : access_token, "refresh_token" : refresh_token})
+        if (validated_data.get("email") == AUTHORIZED_MAIL) and \
+           (validated_data.get("password") == AUTHORIZED_PASSWORD):
+
+            access_token = create_access_token(identity=validated_data)
+            refresh_token = create_refresh_token(identity=validated_data)
+
+            return jsonify(response={"access_token": access_token, "refresh_token": refresh_token})
+
+        else:
+            raise Exception("Credenciales inválidas")
 
     except Exception as e:
-        return jsonify(message = str(e)), 500
+        return jsonify(message=str(e)), 500
+
 
 @app.get('/consult-judicial-proceedings')
 def consult_judicial_proceedings():
