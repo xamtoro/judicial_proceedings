@@ -112,7 +112,15 @@ class Validator:
 
     @classmethod
     def validate_type_error(cls, error) -> str:
+        """
+            Method in charge of validating the type of error in order to return a message to the view.
 
+            Parameters:
+                - error: Error that has occurred
+
+            Return:
+                - Error message
+        """
         try:
             if "ValidationError" in f"{type(error)}":
                 return "¡Por favor ingresa los datos correctamente!"
