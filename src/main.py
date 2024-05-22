@@ -81,3 +81,6 @@ def result_search_judicial_proceedings():
 
     except Exception as e:
         return jsonify(message = str(e)), 500
+
+if __name__ == "__main__":
+    app.run(debug=True)
